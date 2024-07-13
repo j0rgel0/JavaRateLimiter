@@ -85,9 +85,14 @@ public class UserController {
     /**
      * Obtener información de rate limit para un usuario específico.
      */
-    @PostMapping("/admin/rate-limit-information")
-    public ResponseEntity<UserRequestInfo> getRateLimitInfo(@RequestBody Long userId) {
-        UserRequestInfo info = rateLimiter.getUserRequestInfo(userId);
+    @PostMapping("/admin/rate-limit-information/{id}")
+    public ResponseEntity<UserRequestInfo> getRateLimitInfo(@PathVariable Long id) {
+
+        User user = userService.getUserById(id);
+
+        UserRequestInfo info = rateLimiter.getUserRequestInfo(id);
         return info != null ? new ResponseEntity<>(info, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 }
