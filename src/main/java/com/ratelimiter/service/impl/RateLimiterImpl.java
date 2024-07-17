@@ -67,7 +67,10 @@ public class RateLimiterImpl implements RateLimiter {
 
     @Override
     public UserRequestInfo getUserRequestInfo(Long userId) {
-        return userRequestMap.get(userId);
+
+        UserRequestInfo userRequestInfo = userRequestMap.getOrDefault(userId, new UserRequestInfo(0, LocalDateTime.now(), 0, null));
+
+        return userRequestInfo;
     }
 }
 
